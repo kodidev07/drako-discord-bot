@@ -1,0 +1,23 @@
+{
+  "name": "drako-api-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": [],
+  "author": "kodidev",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@discord-player/extractor": "^7.2.0",
+    "discord-player": "^7.2.0",
+    "discord-voip": "^7.2.0",
+    "discord.js": "^14.26.4",
+    "distube": "^5.2.3",
+    "dotenv": "^17.4.2",
+    "ffmpeg-static": "^5.3.0"
+  }
+}
