@@ -6,17 +6,21 @@ module.exports = async (client, interaction) => {
     skipFFmpeg: false,
   });
 
-  await player.extractors.register(SoundCloudExtractor, {});
-  await player.extractors.register(SpotifyExtractor, {
+  player.extractors.register(SoundCloudExtractor, {});
+  player.extractors.register(SpotifyExtractor, {
     clientId: process.env.SPOTIFY_CLIENT_ID,         // ← nuevo
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET, // ← nuevo
   });
  const embed1 = new EmbedBuilder()
       .setDescription("✅ ``No hay ninguna canción en la lista, saliendo del canal de voz.``")
       .setColor(16777215)
-  player.events.on("emptyQueue", (queue) => {
+  try {
+      player.events.on("emptyQueue", (queue) => {
     queue.metadata.channel.send({embeds:[embed1]});
   });
+  } catch (err) {
+    console.error(err);
+  }
  const embed2 = new EmbedBuilder()
       .setDescription("👋 ``Canal de voz vacío, saliendo del canal de voz.``")
       .setColor(16777215)
