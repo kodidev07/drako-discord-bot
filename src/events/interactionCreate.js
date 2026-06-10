@@ -13,8 +13,8 @@ module.exports = {
     name: "interactionCreate",
 
     async execute(interaction, client) {
-
-        // ── Select Menu ──────────────────────────────────────────────────
+    const clientId = interaction.client.user.id;
+    const inviteUrl = `https://discord.com/oauth2/authorize?client_id=1513184448177373244`;
         if (interaction.isStringSelectMenu()) {
             if (interaction.customId === "menu") {
                 if (interaction.values[0] === "info") {
@@ -26,7 +26,7 @@ module.exports = {
                         })
                         .addFields({
                             name: "Lista de comandos",
-                            value: "> ``/help, /ping``",
+                            value: "> ``/help, /ping, /avatar, /invite``",
                         })
                         .setColor(16777215)
                         .setFooter({
@@ -37,15 +37,22 @@ module.exports = {
                     const menu = new StringSelectMenuBuilder()
                         .setCustomId("menu")
                         .setPlaceholder("Selecciona una categoria")
-                        .addOptions({
-                            label: "Comandos de información",
-                            description: "/ping, /help, /avatar",
-                            value: "info",
-                            emoji: "ℹ️",
-                        },
+                        .addOptions(
                             {
                                 label: "Menú principal",
                                 value: "principal"
+                            },
+                            {
+                                label: "Comandos de información",
+                                description: "/ping, /help, /avatar, /invite",
+                                value: "info",
+                                emoji: "ℹ️",
+                            },
+                            {
+                                label: "Comandos de Música",
+                                description: "/play, /queue, /skip, /stop, /set-volume",
+                                value: "music",
+                                emoji: "🎵",
                             }
                         );
                     const selectRow = new ActionRowBuilder().addComponents(menu);
@@ -57,10 +64,14 @@ module.exports = {
                         .setCustomId("bug_report")
                         .setLabel("Reportar Bug")
                         .setStyle(ButtonStyle.Danger);
+                    const button = new ButtonBuilder()
+                        .setLabel("Invitar a Drako")
+                        .setEmoji("💌")
+                        .setStyle(ButtonStyle.Link)
+                        .setURL(inviteUrl);
+                    const buttonRow = new ActionRowBuilder().addComponents(button, urlButton, bugButton);
 
-                    const buttonRow = new ActionRowBuilder().addComponents(urlButton, bugButton);
-
-                    await interaction.update({ embeds: [embed], components: [selectRow, buttonRow] });
+                    await interaction.reply({ embeds: [embed], components: [selectRow, buttonRow] });
                 }
 
                 if (interaction.values[0] === "principal") {
@@ -87,15 +98,22 @@ module.exports = {
                     const menu = new StringSelectMenuBuilder()
                         .setCustomId("menu")
                         .setPlaceholder("Selecciona una categoria")
-                        .addOptions({
-                            label: "Comandos de información",
-                            description: "/ping, /help",
-                            value: "info",
-                            emoji: "ℹ️",
-                        },
+                        .addOptions(
                             {
                                 label: "Menú principal",
                                 value: "principal"
+                            },
+                            {
+                                label: "Comandos de información",
+                                description: "/ping, /help, /avatar, /invite",
+                                value: "info",
+                                emoji: "ℹ️",
+                            },
+                            {
+                                label: "Comandos de Música",
+                                description: "/play, /queue, /skip, /stop, /set-volume",
+                                value: "music",
+                                emoji: "🎵",
                             }
                         );
                     const selectRow = new ActionRowBuilder().addComponents(menu);
@@ -107,15 +125,74 @@ module.exports = {
                         .setCustomId("bug_report")
                         .setLabel("Reportar Bug")
                         .setStyle(ButtonStyle.Danger);
+                    const button = new ButtonBuilder()
+                        .setLabel("Invitar a Drako")
+                        .setEmoji("💌")
+                        .setStyle(ButtonStyle.Link)
+                        .setURL(inviteUrl);
+                    const buttonRow = new ActionRowBuilder().addComponents(button, urlButton, bugButton);
 
-                    const buttonRow = new ActionRowBuilder().addComponents(urlButton, bugButton);
+                    await interaction.update({ embeds: [embed], components: [selectRow, buttonRow] });
+                }
+                if (interaction.values[0] === "music") {
+                    const embed = new EmbedBuilder()
+                        .setAuthor({
+                            name: "Comandos de Música",
+                            iconURL:
+                                "https://cdn.discordapp.com/avatars/1513184448177373244/a7fb97aa659769777090448f5efb114b.png?size=4096",
+                        })
+                        .addFields({
+                            name: "Lista de comandos",
+                            value: "> ``/play, /queue, /skip, /stop, /set-volume``",
+                        })
+                        .setColor(16777215)
+                        .setFooter({
+                            text: "Made by kodidev",
+                            iconURL:
+                                "https://cdn.discordapp.com/avatars/1513184448177373244/a7fb97aa659769777090448f5efb114b.png?size=4096",
+                        });
+                    const menu = new StringSelectMenuBuilder()
+                        .setCustomId("menu")
+                        .setPlaceholder("Selecciona una categoria")
+                        .addOptions(
+                            {
+                                label: "Menú principal",
+                                value: "principal"
+                            },
+                            {
+                                label: "Comandos de información",
+                                description: "/ping, /help, /avatar, /invite",
+                                value: "info",
+                                emoji: "ℹ️",
+                            },
+                            {
+                                label: "Comandos de Música",
+                                description: "/play, /queue, /skip, /stop, /set-volume",
+                                value: "music",
+                                emoji: "🎵",
+                            }
+                        );
+                    const selectRow = new ActionRowBuilder().addComponents(menu);
+                    const urlButton = new ButtonBuilder()
+                        .setLabel("Servidor de Soporte")
+                        .setStyle(ButtonStyle.Link)
+                        .setURL("https://discord.gg/zfR7NAhbAv");
+                    const bugButton = new ButtonBuilder()
+                        .setCustomId("bug_report")
+                        .setLabel("Reportar Bug")
+                        .setStyle(ButtonStyle.Danger);
+                    const button = new ButtonBuilder()
+                        .setLabel("Invitar a Drako")
+                        .setEmoji("💌")
+                        .setStyle(ButtonStyle.Link)
+                        .setURL(inviteUrl);
+                    const buttonRow = new ActionRowBuilder().addComponents(button, urlButton, bugButton);
 
                     await interaction.update({ embeds: [embed], components: [selectRow, buttonRow] });
                 }
             }
             return;
         }
-
         // ── Botón Bug Report → abre el modal ────────────────────────────
         if (interaction.isButton()) {
             if (interaction.customId === "bug_report") {
@@ -270,7 +347,7 @@ module.exports = {
         if (!command) return;
 
         try {
-            await command.execute(interaction);
+            await command.execute(interaction, client);
         } catch (err) {
             console.error(err);
             await interaction.reply({

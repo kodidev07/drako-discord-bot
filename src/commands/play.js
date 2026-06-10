@@ -55,7 +55,7 @@ module.exports = {
 
   const embed = new EmbedBuilder()
     .setAuthor({
-      name: "Reproduciendo ahora...",
+      name: "Canción añadida a la cola",
       iconURL: interaction.user.displayAvatarURL(),
     })
     .setTitle(track.title)

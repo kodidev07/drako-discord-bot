@@ -18,6 +18,9 @@ module.exports = {
       InteractionContextType.PrivateChannel,
     ),
   async execute(interaction) {
+    const clientId = interaction.client.user.id; 
+    const inviteUrl = `https://discord.com/oauth2/authorize?client_id=1513184448177373244`;
+
     const embed = new EmbedBuilder()
       .setAuthor({
         name: "Drako",
@@ -42,17 +45,24 @@ module.exports = {
     const menu = new StringSelectMenuBuilder()
       .setCustomId("menu")
       .setPlaceholder("Selecciona una categoria")
-      .addOptions({
-        label: "Comandos de información",
-        description: "/ping, /help, /avatar",
-        value: "info",
-        emoji: "ℹ️",
-      },
-      {
-        label: "Menú principal",
-        value: "principal"
-      }
-    );
+      .addOptions(
+        {
+          label: "Menú principal",
+          value: "principal"
+        },
+        {
+          label: "Comandos de información",
+          description: "/ping, /help, /avatar, /invite",
+          value: "info",
+          emoji: "ℹ️",
+        },
+        {
+          label: "Comandos de Música",
+          description: "/play, /queue, /skip, /stop, /set-volume",
+          value: "music",
+          emoji: "🎵",
+        }
+      );
 
     const selectRow = new ActionRowBuilder().addComponents(menu);
 
@@ -61,18 +71,23 @@ module.exports = {
       .setStyle(ButtonStyle.Link)
       .setURL("https://discord.gg/zfR7NAhbAv");
 
+    const button = new ButtonBuilder()
+      .setLabel("Invitar a Drako")
+      .setEmoji("💌")
+      .setStyle(ButtonStyle.Link)
+      .setURL(inviteUrl);
+
     // Botón que abre el modal de bug report
     const bugButton = new ButtonBuilder()
       .setCustomId("bug_report")
       .setLabel("Reportar Bug")
       .setStyle(ButtonStyle.Danger);
 
-    const buttonRow = new ActionRowBuilder().addComponents(urlButton, bugButton);
+    const buttonRow = new ActionRowBuilder().addComponents(button, urlButton, bugButton);
 
     await interaction.reply({
       embeds: [embed],
       components: [selectRow, buttonRow],
-      ephemeral: true,
     });
   },
 };
