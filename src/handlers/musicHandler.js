@@ -14,13 +14,10 @@ module.exports = async (client, interaction) => {
  const embed1 = new EmbedBuilder()
       .setDescription("✅ ``No hay ninguna canción en la lista, saliendo del canal de voz.``")
       .setColor(16777215)
-  try {
-      player.events.on("emptyQueue", (queue) => {
+
+    player.events.on("emptyQueue", (queue) => {
     queue.metadata.channel.send({embeds:[embed1]});
   });
-  } catch (err) {
-    console.error(err);
-  }
  const embed2 = new EmbedBuilder()
       .setDescription("👋 ``Canal de voz vacío, saliendo del canal de voz.``")
       .setColor(16777215)
